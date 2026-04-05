@@ -7,14 +7,14 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
 <style>
-body {font-family: 'Inter', sans-serif; background:#0a0a0a; color:white;}
+body {font-family: 'Inter', sans-serif; background:#fafafa; color:#111;}
 .font-serif {font-family:'Cormorant Garamond', serif;}
 </style>
 </head>
@@ -24,36 +24,51 @@ body {font-family: 'Inter', sans-serif; background:#0a0a0a; color:white;}
 
 <script type="text/babel">
 
-const Navigation = () => (
-<nav className="fixed w-full top-0 bg-black/70 backdrop-blur-md z-50">
-<div className="max-w-7xl mx-auto px-6 flex justify-between h-16 items-center">
-<h1 className="font-serif text-2xl">Officina Del Caffè</h1>
+const Hero = () => (
+<section className="h-screen flex items-center justify-center text-center relative">
+<img 
+src="https://images.unsplash.com/photo-1509042239860-f550ce710b93"
+className="absolute w-full h-full object-cover"
+/>
+<div className="absolute inset-0 bg-black/50"></div>
+
+<div className="relative text-white">
+<h1 className="text-6xl font-serif mb-4">Officina Del Caffè</h1>
+<p className="text-xl mb-6">Caffè • Aperitivo • Atmosfera autentica</p>
+
+<a href="https://wa.me/393284854160"
+className="bg-white text-black px-6 py-3 rounded-full">
+Contattaci
+</a>
 </div>
-</nav>
+</section>
 );
 
-const Hero = () => (
-<section className="h-screen flex items-center justify-center text-center">
-<div>
-<h1 className="font-serif text-6xl mb-4">Officina Del Caffè</h1>
-<p className="text-xl mb-6">Eccellenza del caffè a Cassino ☕</p>
-<a href="https://wa.me/393284854160" className="bg-white text-black px-6 py-3 rounded-full">Contattaci</a>
+const Gallery = () => (
+<section className="py-20 bg-white text-center">
+<h2 className="text-4xl font-serif mb-10">Il Nostro Ambiente</h2>
+
+<div className="grid md:grid-cols-3 gap-4 max-w-6xl mx-auto">
+<img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085" className="rounded-xl"/>
+<img src="https://images.unsplash.com/photo-1511920170033-f8396924c348" className="rounded-xl"/>
+<img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24" className="rounded-xl"/>
 </div>
 </section>
 );
 
 const Menu = () => (
 <section className="py-20 text-center">
-<h2 className="text-4xl mb-10 font-serif">Menu</h2>
-<div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+<h2 className="text-4xl font-serif mb-10">Menu</h2>
+
+<div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
 {[
 ["Espresso","€1.50"],
 ["Cappuccino","€2.00"],
 ["Cornetto","€1.20"],
 ["Aperitivo","€5.00"]
 ].map((item,i)=>(
-<div key={i} className="p-6 bg-white/5 rounded-xl">
-<h3>{item[0]}</h3>
+<div key={i} className="p-6 bg-gray-100 rounded-xl">
+<h3 className="font-semibold">{item[0]}</h3>
 <p>{item[1]}</p>
 </div>
 ))}
@@ -62,23 +77,26 @@ const Menu = () => (
 );
 
 const Reviews = () => (
-<section className="py-20 text-center">
-<h2 className="text-4xl mb-10 font-serif">Reviews</h2>
-<p className="max-w-xl mx-auto">⭐ 4.5 su Google Maps — Ambiente accogliente e personale gentile.</p>
+<section className="py-20 bg-gray-100 text-center">
+<h2 className="text-4xl font-serif mb-6">Recensioni</h2>
+<p className="max-w-xl mx-auto">
+⭐ 4.5 su Google Maps — Ambiente accogliente e personale gentile.
+</p>
 </section>
 );
 
 const Contact = () => (
 <section className="py-20 text-center">
-<h2 className="text-4xl mb-6 font-serif">Contatti</h2>
+<h2 className="text-4xl font-serif mb-6">Contatti</h2>
+
 <p>Via Casilina Nord, 63</p>
-<p>Cassino (FR), Italia</p>
+<p>Cassino (FR)</p>
 <p className="mt-2">+39 328 485 4160</p>
 
 <div className="mt-6">
 <iframe 
 src="https://www.google.com/maps?q=Via+Casilina+Nord+63+Cassino&output=embed"
-width="100%" height="300" style={{border:0}}>
+width="100%" height="300">
 </iframe>
 </div>
 </section>
@@ -86,8 +104,8 @@ width="100%" height="300" style={{border:0}}>
 
 const App = () => (
 <>
-<Navigation/>
 <Hero/>
+<Gallery/>
 <Menu/>
 <Reviews/>
 <Contact/>
