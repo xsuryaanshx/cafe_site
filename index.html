@@ -5,91 +5,82 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Caffè Roma</title>
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- React -->
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-
-  <!-- Babel -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <!-- AOS (scroll animations) -->
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;500&display=swap" rel="stylesheet">
 
   <style>
-    body { font-family: 'Poppins', sans-serif; }
-
-    .glow {
-      box-shadow: 0 0 40px rgba(255,255,255,0.1);
+    body {
+      font-family: 'Inter', sans-serif;
+      background: black;
     }
 
-    .parallax {
-      background-attachment: fixed;
+    h1, h2 {
+      font-family: 'Playfair Display', serif;
     }
   </style>
 </head>
 
-<body class="bg-black text-white">
+<body class="text-white">
 
 <div id="root"></div>
 
 <script type="text/babel">
 
-const { useEffect } = React;
-
 const data = {
   name: "Caffè Roma",
-  tagline: "Luxury Coffee Experience ☕",
+  tagline: "Where Coffee Meets Luxury",
   address: "Via Roma, Cassino",
   whatsapp: "393000000000",
-  image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93",
+  hero: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085",
+  gallery: [
+    "https://images.unsplash.com/photo-1509042239860-f550ce710b93",
+    "https://images.unsplash.com/photo-1464306076886-debca5e8a6b0",
+    "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb"
+  ],
   menu: [
     { name: "Espresso", price: "€1.20" },
     { name: "Cappuccino", price: "€1.50" },
-    { name: "Croissant", price: "€2.00" },
-    { name: "Latte", price: "€2.50" },
-    { name: "Mocha", price: "€3.00" }
+    { name: "Croissant", price: "€2.00" }
   ]
 };
 
 function Hero() {
   return (
-    <div
-      className="h-screen bg-cover bg-center flex items-center justify-center parallax"
-      style={{ backgroundImage: `url(${data.image})` }}
-    >
-      <div 
-        data-aos="zoom-in"
-        className="bg-black/60 backdrop-blur-lg p-10 rounded-2xl text-center glow"
-      >
-        <h1 className="text-5xl md:text-6xl font-bold mb-4">{data.name}</h1>
-        <p className="text-xl opacity-90">{data.tagline}</p>
+    <div className="h-screen relative flex items-center justify-center text-center">
+      
+      <img src={data.hero} className="absolute w-full h-full object-cover opacity-40"/>
+
+      <div className="z-10 max-w-2xl">
+        <h1 className="text-6xl md:text-7xl mb-6">{data.name}</h1>
+        <p className="text-xl opacity-80">{data.tagline}</p>
+
+        <a
+          href={`https://wa.me/${data.whatsapp}`}
+          className="mt-8 inline-block bg-white text-black px-6 py-3 rounded-full hover:scale-110 transition"
+        >
+          Reserve Table
+        </a>
       </div>
+
     </div>
   );
 }
 
 function Menu() {
   return (
-    <div className="py-24 px-6 text-center bg-gradient-to-b from-gray-900 to-black">
-      <h2 className="text-4xl font-bold mb-12" data-aos="fade-up">Menu</h2>
+    <div className="py-24 text-center">
+      <h2 className="text-5xl mb-12">Our Menu</h2>
 
-      <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+      <div className="space-y-6 max-w-xl mx-auto">
         {data.menu.map((item, i) => (
-          <div
-            key={i}
-            data-aos="fade-up"
-            data-aos-delay={i * 100}
-            className="bg-white/10 backdrop-blur-md p-6 rounded-2xl glow hover:scale-110 transition duration-300"
-          >
-            <h3 className="text-xl font-semibold">{item.name}</h3>
-            <p className="text-gray-300 mt-2">{item.price}</p>
+          <div key={i} className="flex justify-between border-b border-gray-700 pb-2">
+            <span>{item.name}</span>
+            <span>{item.price}</span>
           </div>
         ))}
       </div>
@@ -97,44 +88,53 @@ function Menu() {
   );
 }
 
-function Contact() {
+function Gallery() {
   return (
-    <div className="py-24 text-center">
-      <h2 className="text-3xl font-bold mb-4" data-aos="fade-up">Visit Us</h2>
-      <p className="opacity-80" data-aos="fade-up" data-aos-delay="200">
-        {data.address}
-      </p>
+    <div className="py-24 px-6">
+      <h2 className="text-5xl text-center mb-12">Experience</h2>
+
+      <div className="grid md:grid-cols-3 gap-6">
+        {data.gallery.map((img, i) => (
+          <img
+            key={i}
+            src={img}
+            className="rounded-xl hover:scale-105 transition duration-500"
+          />
+        ))}
+      </div>
     </div>
   );
 }
 
-function WhatsApp() {
+function Reviews() {
   return (
-    <a
-      href={`https://wa.me/${data.whatsapp}`}
-      target="_blank"
-      className="fixed bottom-6 right-6 bg-green-500 text-white px-6 py-3 rounded-full shadow-xl hover:scale-110 transition glow"
-    >
-      Order Now
-    </a>
+    <div className="py-24 text-center bg-white text-black">
+      <h2 className="text-5xl mb-12">What People Say</h2>
+
+      <div className="max-w-2xl mx-auto space-y-6">
+        <p>"Best coffee in Cassino!" ⭐⭐⭐⭐⭐</p>
+        <p>"Amazing vibe and service." ⭐⭐⭐⭐⭐</p>
+      </div>
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <div className="py-12 text-center">
+      <p>{data.address}</p>
+    </div>
   );
 }
 
 function App() {
-
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true
-    });
-  }, []);
-
   return (
     <>
       <Hero />
       <Menu />
-      <Contact />
-      <WhatsApp />
+      <Gallery />
+      <Reviews />
+      <Footer />
     </>
   );
 }
