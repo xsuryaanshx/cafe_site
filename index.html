@@ -1,585 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Caffè Roma — Where Coffee Meets Luxury</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts (refined type hierarchy) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
-    
-    <!-- React & ReactDOM -->
-    <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
-    
-    <!-- Babel for JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- Framer Motion via ESM (CDN) – using window global -->
-    <script type="importmap">
-        {
-            "imports": {
-                "framer-motion": "https://esm.sh/framer-motion@11.0.2"
-            }
-        }
-    </script>
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Officina Del Caffè — Cassino</title>
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
-            color: #ffffff;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
+<script src="https://cdn.tailwindcss.com"></script>
 
-        /* custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #141414;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #3a3a3a;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #5a5a5a;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
-        .font-serif {
-            font-family: 'Cormorant Garamond', serif;
-        }
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-        /* enhanced glass morphism */
-        .glass {
-            background: rgba(20, 20, 20, 0.4);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #F9F6EE 0%, #C0B7A8 60%, #E5D9C5 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-gradient {
-            background: radial-gradient(circle at 30% 20%, rgba(0,0,0,0.2) 0%, rgba(5,5,5,0.85) 90%);
-        }
-
-        .section-padding {
-            padding: 120px 0;
-        }
-        @media (max-width: 768px) {
-            .section-padding {
-                padding: 80px 0;
-            }
-        }
-
-        /* advanced hover effects */
-        .hover-lift {
-            transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), box-shadow 0.3s ease;
-        }
-        .hover-lift:hover {
-            transform: translateY(-6px) scale(1.01);
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
-        }
-
-        .image-zoom-container {
-            overflow: hidden;
-            border-radius: 1.5rem;
-        }
-        .image-zoom {
-            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .image-zoom-container:hover .image-zoom {
-            transform: scale(1.08);
-        }
-
-        /* reveal animation (Intersection Observer) */
-        .reveal {
-            opacity: 0;
-            transform: translateY(36px);
-            transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* custom underline animation for nav */
-        .nav-link {
-            position: relative;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1.5px;
-            background: linear-gradient(90deg, #E5D9C5, #ffffff);
-            transition: width 0.3s ease;
-        }
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        /* animated border shine for menu cards */
-        .menu-card {
-            position: relative;
-            overflow: hidden;
-        }
-        .menu-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(255,245,215,0.4), transparent);
-            transition: left 0.5s ease;
-        }
-        .menu-card:hover::before {
-            left: 100%;
-        }
-
-        .whatsapp-float {
-            position: fixed;
-            bottom: 28px;
-            right: 28px;
-            z-index: 1000;
-            transition: all 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
-        }
-        .whatsapp-float:hover {
-            transform: scale(1.12) rotate(2deg);
-            filter: brightness(1.05);
-            box-shadow: 0 20px 35px -8px rgba(37,211,102,0.4);
-        }
-
-        .nav-blur {
-            backdrop-filter: blur(24px);
-            background: rgba(8, 8, 8, 0.75);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        /* custom button glow */
-        .btn-gold {
-            transition: all 0.3s ease;
-        }
-        .btn-gold:hover {
-            box-shadow: 0 0 18px rgba(229, 217, 197, 0.3);
-            background: #f5efdf;
-            color: #0a0a0a;
-        }
-
-        /* smooth loading for hero */
-        .fade-in-hero {
-            animation: smoothFade 1.2s cubic-bezier(0.2, 0.9, 0.4, 1) forwards;
-        }
-        @keyframes smoothFade {
-            0% { opacity: 0; transform: scale(0.98);}
-            100% { opacity: 1; transform: scale(1);}
-        }
-    </style>
+<style>
+body {font-family: 'Inter', sans-serif; background:#0a0a0a; color:white;}
+.font-serif {font-family:'Cormorant Garamond', serif;}
+</style>
 </head>
+
 <body>
-    <div id="root"></div>
+<div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect, useRef, useCallback } = React;
+<script type="text/babel">
 
-        // ---- custom hook for Intersection Observer (reveal animations) ----
-        const useRevealOnScroll = () => {
-            useEffect(() => {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('active');
-                        }
-                    });
-                }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
-                
-                const elements = document.querySelectorAll('.reveal');
-                elements.forEach(el => observer.observe(el));
-                return () => observer.disconnect();
-            }, []);
-        };
+const Navigation = () => (
+<nav className="fixed w-full top-0 bg-black/70 backdrop-blur-md z-50">
+<div className="max-w-7xl mx-auto px-6 flex justify-between h-16 items-center">
+<h1 className="font-serif text-2xl">Officina Del Caffè</h1>
+</div>
+</nav>
+);
 
-        // Navigation with enhanced active styling
-        const Navigation = () => {
-            const [scrolled, setScrolled] = useState(false);
-            const [activeSection, setActiveSection] = useState('');
+const Hero = () => (
+<section className="h-screen flex items-center justify-center text-center">
+<div>
+<h1 className="font-serif text-6xl mb-4">Officina Del Caffè</h1>
+<p className="text-xl mb-6">Eccellenza del caffè a Cassino ☕</p>
+<a href="https://wa.me/393284854160" className="bg-white text-black px-6 py-3 rounded-full">Contattaci</a>
+</div>
+</section>
+);
 
-            useEffect(() => {
-                const handleScroll = () => {
-                    const offset = window.scrollY;
-                    setScrolled(offset > 40);
-                    
-                    // update active section based on scroll position
-                    const sections = ['menu', 'experience', 'reviews', 'contact'];
-                    for (let sec of sections) {
-                        const el = document.getElementById(sec);
-                        if (el) {
-                            const rect = el.getBoundingClientRect();
-                            if (rect.top <= 150 && rect.bottom >= 150) {
-                                setActiveSection(sec);
-                                break;
-                            }
-                        }
-                    }
-                };
-                window.addEventListener('scroll', handleScroll);
-                return () => window.removeEventListener('scroll', handleScroll);
-            }, []);
+const Menu = () => (
+<section className="py-20 text-center">
+<h2 className="text-4xl mb-10 font-serif">Menu</h2>
+<div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+{[
+["Espresso","€1.50"],
+["Cappuccino","€2.00"],
+["Cornetto","€1.20"],
+["Aperitivo","€5.00"]
+].map((item,i)=>(
+<div key={i} className="p-6 bg-white/5 rounded-xl">
+<h3>{item[0]}</h3>
+<p>{item[1]}</p>
+</div>
+))}
+</div>
+</section>
+);
 
-            const scrollToSection = (id) => {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            };
+const Reviews = () => (
+<section className="py-20 text-center">
+<h2 className="text-4xl mb-10 font-serif">Reviews</h2>
+<p className="max-w-xl mx-auto">⭐ 4.5 su Google Maps — Ambiente accogliente e personale gentile.</p>
+</section>
+);
 
-            const navItems = [
-                { id: 'menu', label: 'Menu' },
-                { id: 'experience', label: 'Experience' },
-                { id: 'reviews', label: 'Reviews' },
-                { id: 'contact', label: 'Contact' }
-            ];
+const Contact = () => (
+<section className="py-20 text-center">
+<h2 className="text-4xl mb-6 font-serif">Contatti</h2>
+<p>Via Casilina Nord, 63</p>
+<p>Cassino (FR), Italia</p>
+<p className="mt-2">+39 328 485 4160</p>
 
-            return (
-                <nav className={`fixed w-full top-0 z-50 transition-all duration-500 ${scrolled ? 'nav-blur' : 'bg-transparent'}`}>
-                    <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                        <div className="flex items-center justify-between h-20">
-                            <div className="font-serif text-3xl font-light tracking-wider cursor-pointer" onClick={() => window.scrollTo({top:0, behavior:'smooth'})}>
-                                <span className="gradient-text">Caffè Roma</span>
-                            </div>
-                            <div className="hidden md:flex space-x-10">
-                                {navItems.map((item) => (
-                                    <button 
-                                        key={item.id}
-                                        onClick={() => scrollToSection(item.id)} 
-                                        className={`nav-link text-sm tracking-wide transition-all duration-200 ${activeSection === item.id ? 'text-white font-medium' : 'text-gray-300 hover:text-white'}`}
-                                    >
-                                        {item.label}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            );
-        };
+<div className="mt-6">
+<iframe 
+src="https://www.google.com/maps?q=Via+Casilina+Nord+63+Cassino&output=embed"
+width="100%" height="300" style={{border:0}}>
+</iframe>
+</div>
+</section>
+);
 
-        // Hero Section with micro-interactions and parallax-like effect
-        const Hero = () => {
-            const [offsetY, setOffsetY] = useState(0);
-            const handleScroll = useCallback(() => {
-                setOffsetY(window.scrollY);
-            }, []);
-            
-            useEffect(() => {
-                window.addEventListener('scroll', handleScroll);
-                return () => window.removeEventListener('scroll', handleScroll);
-            }, [handleScroll]);
-            
-            return (
-                <section className="relative h-screen flex items-center justify-center overflow-hidden">
-                    <div className="absolute inset-0 z-0" style={{ transform: `translateY(${offsetY * 0.2}px)` }}>
-                        <img 
-                            src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2340&auto=format&fit=crop" 
-                            alt="Caffè Roma interior luxury coffee"
-                            className="w-full h-full object-cover"
-                            style={{ objectPosition: "center 30%" }}
-                        />
-                        <div className="absolute inset-0 hero-gradient"></div>
-                    </div>
-                    
-                    <div className="relative z-10 text-center px-6 max-w-5xl fade-in-hero">
-                        <h1 className="font-serif text-7xl md:text-8xl lg:text-9xl font-light mb-6 tracking-tight drop-shadow-2xl">
-                            Caffè Roma
-                        </h1>
-                        <p className="text-xl md:text-2xl text-gray-200 mb-12 tracking-wide font-light max-w-2xl mx-auto">
-                            Where Coffee Meets <span className="gradient-text font-semibold">Luxury</span>
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
-                            <button 
-                                onClick={() => document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth' })}
-                                className="glass px-9 py-4 rounded-full text-sm tracking-widest uppercase font-medium backdrop-blur-md border border-white/20 hover:bg-white/10 transition-all duration-400 hover:scale-105"
-                            >
-                                Explore Menu
-                            </button>
-                            <a 
-                                href="https://wa.me/393451234567" 
-                                target="_blank"
-                                className="bg-[#E5D9C5] text-black px-9 py-4 rounded-full text-sm tracking-widest uppercase font-semibold transition-all duration-300 hover:bg-white hover:scale-105 shadow-xl"
-                            >
-                                Reserve Table
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-                        <div className="w-6 h-10 border-2 border-white/70 rounded-full flex justify-center p-1.5">
-                            <div className="w-1 h-2 bg-white/80 rounded-full animate-pulse"></div>
-                        </div>
-                    </div>
-                </section>
-            );
-        };
+const App = () => (
+<>
+<Navigation/>
+<Hero/>
+<Menu/>
+<Reviews/>
+<Contact/>
+</>
+);
 
-        // Menu Section with staggered reveal and rich UI
-        const Menu = () => {
-            useRevealOnScroll();
-            
-            const menuItems = [
-                { name: "Espresso", description: "Rich, full-bodied Italian espresso crafted from single-origin beans", price: "€3.50", accent: "Intense" },
-                { name: "Cappuccino", description: "Velvety microfoam meets perfectly extracted espresso", price: "€4.50", accent: "Creamy" },
-                { name: "Flat White", description: "Australian-style coffee with silky microfoam texture", price: "€4.80", accent: "Silky" },
-                { name: "Croissant", description: "Butter-rich, flaky French pastry baked fresh daily", price: "€3.20", accent: "Flaky" },
-                { name: "Tiramisu", description: "Classic Italian dessert with espresso-soaked ladyfingers", price: "€6.50", accent: "Divine" },
-                { name: "Affogato", description: "Vanilla gelato drowned in a shot of hot espresso", price: "€5.50", accent: "Indulgent" }
-            ];
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 
-            return (
-                <section id="menu" className="section-padding bg-gradient-to-b from-[#050505] via-black to-[#0f0f0f]">
-                    <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                        <div className="text-center mb-20 reveal">
-                            <span className="text-[#C6B7A3] text-sm tracking-[0.3em] uppercase mb-3 block">Artisan Selection</span>
-                            <h2 className="font-serif text-6xl md:text-7xl font-light mb-5 gradient-text">Our Menu</h2>
-                            <p className="text-gray-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
-                                Carefully curated selections from the world's finest coffee regions and Italian pastry traditions
-                            </p>
-                        </div>
-                        
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
-                            {menuItems.map((item, idx) => (
-                                <div 
-                                    key={idx}
-                                    className="menu-card glass-card rounded-2xl p-8 hover:border-white/20 transition-all duration-500 hover:bg-white/[0.04] hover:shadow-2xl reveal"
-                                    style={{ transitionDelay: `${idx * 80}ms` }}
-                                >
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div>
-                                            <h3 className="font-serif text-3xl font-medium tracking-tight">{item.name}</h3>
-                                            <p className="text-xs uppercase tracking-wider text-amber-200/70 mt-1">{item.accent}</p>
-                                        </div>
-                                        <span className="text-2xl font-light text-amber-100/90">{item.price}</span>
-                                    </div>
-                                    <p className="text-gray-300 leading-relaxed text-[15px] font-light">
-                                        {item.description}
-                                    </p>
-                                    <div className="mt-5 w-8 h-px bg-gradient-to-r from-amber-500/40 to-transparent"></div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-            );
-        };
-
-        // Experience Gallery with mosaic and smooth zoom
-        const Experience = () => {
-            useRevealOnScroll();
-            const gallery = [
-                { src: "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1200", alt: "Barista craft", tall: true },
-                { src: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1200", alt: "Interior luxury", tall: false },
-                { src: "https://images.unsplash.com/photo-1501492693086-621f86a5e0f8?q=80&w=1200", alt: "Coffee art", tall: false },
-                { src: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200", alt: "Pastry display", tall: false },
-                { src: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=1200", alt: "Ambiance", tall: true },
-                { src: "https://images.unsplash.com/photo-1514066558159-fc8c737ef259?q=80&w=1200", alt: "Outdoor seating", tall: false }
-            ];
-            
-            return (
-                <section id="experience" className="section-padding bg-[#0c0c0c] relative overflow-hidden">
-                    <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                        <div className="text-center mb-20 reveal">
-                            <span className="text-[#C6B7A3] text-sm tracking-[0.3em] uppercase mb-3 block">La Dolce Vita</span>
-                            <h2 className="font-serif text-6xl md:text-7xl font-light mb-5 gradient-text">The Experience</h2>
-                            <p className="text-gray-400 text-lg max-w-2xl mx-auto font-light">
-                                Every detail designed to elevate your moment — from morning espresso to evening aperitivo.
-                            </p>
-                        </div>
-                        
-                        <div className="grid grid-cols-2 lg:grid-cols-3 auto-rows-[280px] gap-5">
-                            {gallery.map((img, idx) => (
-                                <div 
-                                    key={idx}
-                                    className={`image-zoom-container reveal overflow-hidden shadow-2xl ${img.tall ? 'row-span-2' : ''}`}
-                                    style={{ transitionDelay: `${idx * 60}ms` }}
-                                >
-                                    <img 
-                                        src={img.src} 
-                                        alt={img.alt}
-                                        className="image-zoom w-full h-full object-cover"
-                                        loading="lazy"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-            );
-        };
-
-        // Reviews with animated stars / quote and refined design
-        const Reviews = () => {
-            useRevealOnScroll();
-            const reviews = [
-                { text: "An oasis of calm in the heart of the city. The attention to detail is remarkable.", author: "Sofia Russo", role: "Michelin Guide Critic", rating: 5 },
-                { text: "The best espresso I've had outside of Milano. Absolutely exceptional and unforgettable.", author: "Marco Bianchi", role: "Coffee Connoisseur", rating: 5 },
-                { text: "A masterclass in hospitality and craft. This is what luxury feels like — warm yet elegant.", author: "Elena Conti", role: "Interior Designer", rating: 5 }
-            ];
-            
-            return (
-                <section id="reviews" className="section-padding bg-black relative">
-                    <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                        <div className="text-center mb-16 reveal">
-                            <h2 className="font-serif text-6xl md:text-7xl font-light mb-4 gradient-text">Laudations</h2>
-                            <p className="text-gray-400 text-base tracking-wide">Loved by critics and guests alike</p>
-                        </div>
-                        
-                        <div className="grid md:grid-cols-3 gap-10">
-                            {reviews.map((review, idx) => (
-                                <div key={idx} className="glass-card rounded-2xl p-8 backdrop-blur-md reveal hover:border-white/15 transition-all duration-400 hover:-translate-y-1" style={{ transitionDelay: `${idx * 100}ms` }}>
-                                    <div className="flex gap-1 mb-6 justify-center">
-                                        {[...Array(review.rating)].map((_, i) => (
-                                            <svg key={i} className="w-5 h-5 text-amber-300 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                                        ))}
-                                    </div>
-                                    <p className="font-serif text-2xl leading-relaxed mb-7 text-center text-gray-100 italic">"{review.text}"</p>
-                                    <div className="text-center border-t border-white/5 pt-5">
-                                        <p className="text-white font-semibold tracking-wide">{review.author}</p>
-                                        <p className="text-gray-400 text-sm mt-1">{review.role}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-            );
-        };
-
-        // Contact & Footer with interactive map overlay and hover details
-        const Contact = () => {
-            useRevealOnScroll();
-            return (
-                <section id="contact" className="bg-gradient-to-b from-black to-zinc-950 py-24">
-                    <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                        <div className="grid md:grid-cols-2 gap-16 mb-20">
-                            <div className="reveal">
-                                <span className="text-amber-200/70 text-sm tracking-[0.2em] uppercase">Visit our salon</span>
-                                <h2 className="font-serif text-5xl md:text-6xl font-light mb-8 mt-2 gradient-text">Find Us</h2>
-                                <div className="space-y-7 text-gray-300">
-                                    <div className="group transition-all">
-                                        <p className="text-xs tracking-widest uppercase text-amber-200/60 mb-2 group-hover:text-amber-200 transition">📍 Address</p>
-                                        <p className="text-xl font-light">Via Roma, 123</p>
-                                        <p className="text-xl font-light">03043 Cassino, FR, Italia</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-xs tracking-widest uppercase text-amber-200/60 mb-2">⏰ Hours</p>
-                                        <p className="text-xl font-light">Mon – Fri: 7:00 – 20:00</p>
-                                        <p className="text-xl font-light">Sat – Sun: 8:00 – 21:00</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-xs tracking-widest uppercase text-amber-200/60 mb-2">📞 Contact</p>
-                                        <p className="text-xl font-light">+39 0776 123 456</p>
-                                        <p className="text-xl font-light break-all">info@cafferoma.it</p>
-                                    </div>
-                                    <div className="pt-4">
-                                        <a href="https://wa.me/393451234567" target="_blank" className="inline-flex items-center gap-2 text-sm bg-white/5 px-5 py-2 rounded-full hover:bg-white/10 transition">💬 Chat on WhatsApp →</a>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div className="reveal stagger-2">
-                                <div className="glass rounded-2xl overflow-hidden h-96 shadow-2xl border border-white/10 transition-all duration-300 hover:shadow-amber-900/20">
-                                    <iframe 
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3019.0926515486384!2d13.830556315467!3d41.490845579253634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1330738e5fb3b2b1%3A0x7e4e6ea6c0d4c7f5!2sCassino%2C%20Province%20of%20Frosinone%2C%20Italy!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
-                                        width="100%" 
-                                        height="100%" 
-                                        style={{ border: 0, filter: 'contrast(0.9) grayscale(0.2)' }}
-                                        allowFullScreen="" 
-                                        loading="lazy"
-                                        title="Caffè Roma location"
-                                    ></iframe>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div className="border-t border-white/10 pt-12 reveal">
-                            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                                <p className="text-gray-500 text-sm tracking-wide">© 2025 Caffè Roma — Eternal city elegance. All rights reserved.</p>
-                                <div className="flex gap-8">
-                                    <a href="#" className="text-gray-400 hover:text-amber-200 transition-all duration-200 text-sm">Instagram</a>
-                                    <a href="#" className="text-gray-400 hover:text-amber-200 transition-all duration-200 text-sm">Facebook</a>
-                                    <a href="#" className="text-gray-400 hover:text-amber-200 transition-all duration-200 text-sm">TripAdvisor</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            );
-        };
-
-        const WhatsAppButton = () => (
-            <a 
-                href="https://wa.me/393451234567" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="whatsapp-float bg-gradient-to-br from-green-500 to-emerald-600 w-14 h-14 rounded-full flex items-center justify-center shadow-2xl"
-                aria-label="Contact us on WhatsApp"
-            >
-                <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                </svg>
-            </a>
-        );
-
-        const App = () => {
-            useEffect(() => {
-                // pre-trigger any additional smoothness
-                document.documentElement.style.scrollBehavior = 'smooth';
-            }, []);
-            
-            return (
-                <>
-                    <Navigation />
-                    <Hero />
-                    <Menu />
-                    <Experience />
-                    <Reviews />
-                    <Contact />
-                    <WhatsAppButton />
-                </>
-            );
-        };
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+</script>
 </body>
 </html>
