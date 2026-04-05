@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Caffè Roma</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body class="font-sans">
+
+  <!-- HERO -->
+  <section class="h-screen bg-cover bg-center flex items-center justify-center"
+    style="background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93');">
+
+    <div class="bg-black/60 text-white p-8 rounded-xl text-center">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4">Caffè Roma</h1>
+      <p class="text-lg md:text-xl">Best Coffee in Cassino ☕</p>
+    </div>
+
+  </section>
+
+  <!-- MENU -->
+  <section class="py-16 px-6 bg-gray-100 text-center">
+    <h2 class="text-3xl font-bold mb-8">Our Menu</h2>
+
+    <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+
+      <div class="bg-white p-6 rounded-xl shadow-md flex justify-between">
+        <span>Espresso</span>
+        <span>€1.20</span>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow-md flex justify-between">
+        <span>Cappuccino</span>
+        <span>€1.50</span>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow-md flex justify-between">
+        <span>Latte</span>
+        <span>€2.00</span>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow-md flex justify-between">
+        <span>Cornetto</span>
+        <span>€1.80</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="py-16 px-6 text-center">
+    <h2 class="text-3xl font-bold mb-4">Visit Us</h2>
+    <p class="mb-4">Via Example 123, Cassino</p>
+
+    <iframe
+      class="w-full max-w-3xl mx-auto h-64 rounded-xl"
+      src="https://maps.google.com/maps?q=Cassino&t=&z=13&ie=UTF8&iwloc=&output=embed">
+    </iframe>
+  </section>
+
+  <!-- WHATSAPP BUTTON -->
+  <a href="https://wa.me/393000000000"
+     target="_blank"
+     class="fixed bottom-5 right-5 bg-green-500 text-white px-5 py-3 rounded-full shadow-lg hover:bg-green-600">
+    Order Now
+  </a>
+
+</body>
+</html>
